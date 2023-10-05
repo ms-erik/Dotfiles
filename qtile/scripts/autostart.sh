@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#  █████╗ ██╗   ██╗████████╗ ██████╗ ███████╗████████╗ █████╗ ██████╗ ████████╗
+# ██╔══██╗██║   ██║╚══██╔══╝██╔═══██╗██╔════╝╚══██╔══╝██╔══██╗██╔══██╗╚══██╔══╝
+# ███████║██║   ██║   ██║   ██║   ██║███████╗   ██║   ███████║██████╔╝   ██║   
+# ██╔══██║██║   ██║   ██║   ██║   ██║╚════██║   ██║   ██╔══██║██╔══██╗   ██║   
+# ██║  ██║╚██████╔╝   ██║   ╚██████╔╝███████║   ██║   ██║  ██║██║  ██║   ██║   
+# ╚═╝  ╚═╝ ╚═════╝    ╚═╝    ╚═════╝ ╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝  
+
 function run {
 	if ! pgrep -x $(basename $1 | head -c 15) 1>/dev/null; then
 		$@ &
@@ -7,7 +14,7 @@ function run {
 }
 
 # Wallpaper #
-feh --bg-fill /home/erik/Pictures/wal2.webp &
+feh --bg-fill /home/erik/Pictures/spider.jpeg &
 
 # SXHKD #
 run sxhkd -c ~/.config/qtile/sxhkd/sxhkdrc &
@@ -28,3 +35,7 @@ picom --config $HOME/.config/qtile/scripts/picom.conf &
 # User Applications #
 
 run volumeicon &
+
+cbatticon -u 5 &
+
+udiskie -t &

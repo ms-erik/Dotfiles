@@ -18,6 +18,14 @@ mod2 = "control"
 home = os.path.expanduser('~')
 
 
+
+screenshot_directory = "~/Pictures/Screenshots"
+
+
+os.makedirs(os.path.expanduser(screenshot_directory), exist_ok=True)
+
+
+
 @lazy.function
 def window_to_prev_group(qtile):
     if qtile.currentWindow is not None:
@@ -32,7 +40,12 @@ def window_to_next_group(qtile):
 
 keys = [
 
+Key([], "Print", lazy.spawn("scrot 'ArcoLinux-%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f $$(xdg-user-dir PICTURES)'")),
+Key([mod2], "Print", lazy.spawn('xfce4-screenshooter')),
+Key([mod2, "shift"], "Print", lazy.spawn('gnome-screenshot -i')),
+
 # SUPER + FUNCTION KEYS
+
 
     Key([mod], "m", lazy.window.toggle_fullscreen()),
     Key([mod], "q", lazy.window.kill()),
@@ -45,7 +58,7 @@ keys = [
 
 
 # QTILE LAYOUT KEYS
-    Key([mod], "n", lazy.layout.normalize()),
+    #Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "space", lazy.next_layout()),
 
 # CHANGE FOCUS
@@ -77,16 +90,20 @@ keys = [
         lazy.layout.shrink(),
         lazy.layout.increase_nmaster(),
         ),
+# Increase brightness
+    Key([mod], "F1", lazy.spawn("brightnessctl set +10")),
 
+    # Decrease brightness
+    Key([mod], "F2", lazy.spawn("brightnessctl set 10-")),
 
 # FLIP LAYOUT FOR MONADTALL/MONADWIDE
     Key([mod, "shift"], "f", lazy.layout.flip()),
 
 # MOVE WINDOWS UP OR DOWN MONADTALL/MONADWIDE LAYOUT
-    Key([mod, "shift"], "Up", lazy.layout.shuffle_up()),
-    Key([mod, "shift"], "Down", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "Left", lazy.layout.swap_left()),
-    Key([mod, "shift"], "Right", lazy.layout.swap_right()),
+    Key([mod, "shift"], "K", lazy.layout.shuffle_up()),
+    Key([mod, "shift"], "J", lazy.layout.shuffle_down()),
+    Key([mod, "shift"], "L", lazy.layout.swap_left()),
+    Key([mod, "shift"], "H", lazy.layout.swap_right()),
 
 # TOGGLE FLOATING LAYOUT
     Key([mod, "shift"], "space", lazy.window.toggle_floating()),
@@ -136,10 +153,13 @@ for i in groups:
 
 #CHANGE WORKSPACES
         Key([mod], i.name, lazy.group[i.name].toscreen()),
-        Key([mod], "Tab", lazy.screen.next_group()),
-    Key([mod, "shift"], "k", lazy.function(lambda q: q.cmd_nextgroup(skip_empty=True))),
-        Key([mod, "shift"],"j", lazy.window_to_previous_screen()),
-        Key([mod, "shift" ], "Tab", lazy.screen.prev_group()),
+        Key([mod], "n", lazy.screen.next_group()),
+        Key([mod], "b", lazy.screen.prev_group()),
+        
+#        Key([mod, "shift"], "b", lazy.window.next_group(),
+      #  Key([mod, "shift" ], "Tab", lazy.screen.prev_group()),
+       # Key([mod, "shift"],"n", lazy.window.window_to_previous_screen()),
+
 
 # MOVE WINDOW TO SELECTED WORKSPACE 1-10 AND STAY ON WORKSPACE
         Key([mod, "control"], i.name, lazy.window.togroup(i.name)),

@@ -24,6 +24,7 @@ return require('packer').startup(function(use)
   use 'saadparwaiz1/cmp_luasnip'
   use "rafamadriz/friendly-snippets"
   use 'hrsh7th/nvim-compe'
+  use 'm4xshen/autoclose.nvim'
 
   use{
     'nvim-telescope/telescope.nvim',
